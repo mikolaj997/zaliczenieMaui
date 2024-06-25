@@ -1,5 +1,5 @@
 ﻿using zaliczenieMaui.Models;
-using zaliczenieMaui.Models;
+using Microsoft.Data.Sqlite;
 
 namespace zaliczenieMaui
 {
@@ -50,9 +50,21 @@ namespace zaliczenieMaui
                 ((CollectionView)sender).SelectedItem = null;
             }
         }
-
-
+        private async void GoToEditPageClicked(object sender, EventArgs e)
+        {
+            if (projectsCollection.SelectedItem is Project selectedProject)
+            {
+                string action = await DisplayActionSheet("Zmień status projektu", "Cancel", null, "Nierozpoczęty", "W trakcie", "Zakończony");
+                if (action != "Cancel")
+                {
+                    await _databaseService.UpdateProjectStatusAsync(selectedProject.Id, action);
+                    LoadProjects(); // Odśwież listę projektów
+                }
+            }
+        }
+        private void RefreshProjects(object sender, EventArgs e)
+        {
+            LoadProjects();
+        }
     }
-
-
 }

@@ -1,38 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="zaliczenieMaui.MainPage"
-             Title="">
-
-    <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="30">
-            <Entry x:Name="projectNameEntry" Placeholder="Enter project name"/>
-            <Entry x:Name="projectDescriptionEntry" Placeholder="Enter project description"/>
-            <Button Text="Add Project" Clicked="OnAddProjectClicked"/>
-            <CollectionView x:Name="projectsCollection" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Padding="10" ColumnSpacing="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Name}" Grid.Column="0" FontSize="16" VerticalOptions="Center"/>
-                            <Label Text="{Binding Description}" Grid.Column="1" FontSize="14" TextColor="Gray" VerticalOptions="Center"/>
-                            <ImageButton 
-                    Source="delete.png" 
-                    Grid.Column="2" 
-                    Clicked="OnDelete"
-                    CommandParameter="{Binding Id}"
-                    MinimumHeightRequest="40"
-                    MaximumWidthRequest="70"
-                    VerticalOptions="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
-
+             Title="Project Management">
+    <StackLayout>
+        <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" Padding="10">
+            <Button Grid.Column="0" Text="Dodaj projekt" Clicked="OnAddProjectClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <Button Grid.Column="1" Text="Edytuj status projektów" Clicked="GoToEditPageClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <Button Grid.Column="2" Text="Wszystkie projekty" Clicked="RefreshProjects" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+        </Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="25" Padding="30">
+                <Entry x:Name="projectNameEntry" Placeholder="Enter project name"/>
+                <Entry x:Name="projectDescriptionEntry" Placeholder="Enter project description"/>
+                <CollectionView x:Name="projectsCollection" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10" ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Name}" Grid.Column="0" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="{Binding Description}" Grid.Column="1" FontSize="14" TextColor="Gray" VerticalOptions="Center"/>
+                                <ImageButton Source="delete.png" Grid.Column="2" Clicked="OnDelete" CommandParameter="{Binding Id}" MinimumHeightRequest="40" MaximumWidthRequest="70" VerticalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </StackLayout>
 </ContentPage>

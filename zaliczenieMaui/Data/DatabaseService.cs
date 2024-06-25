@@ -18,11 +18,18 @@ public class DatabaseService
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
             db.Open();
-            var tableCommand = "CREATE TABLE IF NOT EXISTS Projects (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Description TEXT)";
+            var tableCommand = @"
+            CREATE TABLE IF NOT EXISTS Projects (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                Name TEXT, 
+                Description TEXT,
+                Status TEXT DEFAULT 'Nierozpoczęty'
+            )";
             var createTable = new SqliteCommand(tableCommand, db);
             createTable.ExecuteNonQuery();
         }
     }
+
 
     public async Task AddProjectAsync(string name, string description)
     {
@@ -75,5 +82,16 @@ public class DatabaseService
             await deleteCommand.ExecuteNonQueryAsync();
         }
     }
-
+    public async Task UpdateProjectStatusAsync(int projectId, string status)
+    {
+        using (var db = new SqliteConnection($"Filename={_dbPath}"))
+        {
+            db.Open();
+            var command = "UPDATE Projects SET Status = @Status WHERE Id = @Id";
+            var updateCommand = new SqliteCommand(command, db);
+            updateCommand.Parameters.AddWithValue("@Status", status);
+            updateCommand.Parameters.AddWithValue("@Id", projectId);
+            await updateCommand.ExecuteNonQueryAsync();
+        }
+    }
 }
