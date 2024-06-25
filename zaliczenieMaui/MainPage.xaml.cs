@@ -24,7 +24,12 @@ namespace zaliczenieMaui
         {
             await Navigation.PushAsync(new PageB());
         }
-       
+        private void ShowProjectsClicked(object sender, EventArgs e)
+        {
+            // Pokaż lub ukryj szczegóły projektów
+            ProjectDetails.IsVisible = !ProjectDetails.IsVisible;
+            AllProjects.IsVisible = !AllProjects.IsVisible;
+        }
     }
 
 }

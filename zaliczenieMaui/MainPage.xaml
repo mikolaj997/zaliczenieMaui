@@ -1,15 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="zaliczenieMaui.MainPage">
+             x:Class="zaliczenieMaui.MainPage"
+             Title="">
+    <StackLayout Padding="10">
+        <Grid BackgroundColor="WhiteSmoke"  ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" Padding="10">
+            <Button Grid.Column="0" Text="Dodaj projekt" Clicked="GoToPageAClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <Button Grid.Column="1" Text="Edytuj projekt" Clicked="GoToPageBClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <!--<StackLayout >-->
+            <Button Grid.Column="2" Text="Wszystkie projekty" BackgroundColor="WhiteSmoke"  TextColor="Black" >
+                    
+                </Button>
 
-    <StackLayout>
-        
-        <Label Text="Welcome to Main Page!" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
-        <Button Text="dodaj projekt" Clicked="GoToPageAClicked" />
-        <Button Text="edytuj projekt" Clicked="GoToPageBClicked" />
+            <!--<Button x:Name="ProjectDetails" Grid.Column="2" Text="Wszystkie projekty" IsVisible="True" TextColor="Black" >
+                <Button.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ShowProjectsClicked" />
+                </Button.GestureRecognizers>
+            </Button>
+            <StackLayout x:Name="ProjectDetails" IsVisible="False" Orientation="Horizontal">
+                <Label Grid.Column="2" Text="Przyszłe" Margin="0,0,10,0"/>
+                <Label Grid.Column="2" Text="Przeszłe"/>
+            </StackLayout>-->
+            <!--</StackLayout>-->
+        </Grid>
     </StackLayout>
-    
-    
+
 
 </ContentPage>
