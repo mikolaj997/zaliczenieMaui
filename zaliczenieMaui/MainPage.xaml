@@ -1,27 +1,30 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="zaliczenieMaui.MainPage"
-             Title="Project Management">
+             Title="">
     <StackLayout>
         <ContentView>
-            <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" Padding="10">
-            <Button Grid.Column="0" Text="Dodaj projekt" Clicked="OnAddProjectClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
-            <Button Grid.Column="1" Text="Edytuj status projektów" Clicked="GoToEditPageClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
-            <Button Grid.Column="2" Text="Wszystkie projekty" Clicked="RefreshProjects" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*,*,*,*" RowDefinitions="auto,auto" Padding="10">
+                <Button Grid.Column="0" Text="PManagement"  BackgroundColor="WhiteSmoke" FontAttributes="Bold" TextColor="Black" Margin="2" ></Button>
+            <Button Grid.Column="1" Text="Dodaj projekt" Clicked="OnAddProjectClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <Button Grid.Column="3" Text="Edytuj status projektów" Clicked="GoToEditPageClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+            <Button Grid.Column="5" Text="Wszystkie projekty" Clicked="RefreshProjects" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
         </Grid>
         </ContentView>
-        <ScrollView>
-            <VerticalStackLayout Spacing="25" Padding="30">
+        <ScrollView VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="25" Padding="20">
                 <Entry x:Name="projectNameEntry" Placeholder="Enter project name"/>
                 <Entry x:Name="projectDescriptionEntry" Placeholder="Enter project description"/>
+                <!--DatePicker bez logiki narazie-->
+                <DatePicker Margin="0"/>
                 <CollectionView x:Name="projectsCollection" SelectionMode="Single">
-                    <CollectionView.ItemsLayout Margin="10">
+                    <CollectionView.ItemsLayout Margin="5">
                         <GridItemsLayout Orientation="Vertical" Span="5"  VerticalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate >
                         <DataTemplate>
                             <Frame Margin="0" Padding="0" CornerRadius="10" WidthRequest="170" HeightRequest="120">
-                                <Grid Margin="10">
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
@@ -36,7 +39,7 @@
                                     <ImageButton Source="delete.png" WidthRequest="30" HeightRequest="30" Clicked="OnDelete" CommandParameter="{Binding Id}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0"/>
                                     <Label Text="{Binding Description}" Grid.Row="1" Grid.Column="0" FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" />
 
-                                    </Grid>
+                                </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
