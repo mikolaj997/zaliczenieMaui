@@ -1,35 +1,58 @@
-﻿using System.Collections.ObjectModel;
-using zaliczenieMaui.Data;
+﻿using zaliczenieMaui.Models;
 using zaliczenieMaui.Models;
 
 namespace zaliczenieMaui
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private readonly DatabaseService _databaseService;
 
         public MainPage()
         {
             InitializeComponent();
-            
-
+            _databaseService = new DatabaseService();
+            LoadProjects();
         }
 
-        private async void GoToPageAClicked(object sender, EventArgs e)
+        private async void LoadProjects()
         {
-            await Navigation.PushAsync(new PageA());
+            var projects = await _databaseService.GetProjectsAsync();
+            projectsCollection.ItemsSource = projects;
         }
 
-        private async void GoToPageBClicked(object sender, EventArgs e)
+
+        private async void OnAddProjectClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new PageB());
+            await _databaseService.AddProjectAsync(projectNameEntry.Text, projectDescriptionEntry.Text);
+            LoadProjects();
+            projectNameEntry.Text = string.Empty;
+            projectDescriptionEntry.Text = string.Empty;
         }
-        private void ShowProjectsClicked(object sender, EventArgs e)
+        private async void OnDelete(object sender, EventArgs e)
         {
-            // Pokaż lub ukryj szczegóły projektów
-            ProjectDetails.IsVisible = !ProjectDetails.IsVisible;
-            AllProjects.IsVisible = !AllProjects.IsVisible;
+            var button = sender as ImageButton;
+            var projectId = (int)button.CommandParameter;
+
+            var isConfirmed = await DisplayAlert("Confirm Delete", "Are you sure you want to delete this project?", "Yes", "No");
+            if (isConfirmed)
+            {
+                await _databaseService.DeleteProjectAsync(projectId);
+                LoadProjects();
+            }
         }
+        private async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection != null && e.CurrentSelection.Count > 0)
+            {
+                var selectedProject = (Project)e.CurrentSelection.FirstOrDefault();
+                await Navigation.PushAsync(new ProjectDetailsPage(selectedProject.Name, selectedProject.Description));
+                // Deselect item
+                ((CollectionView)sender).SelectedItem = null;
+            }
+        }
+
+
     }
+
 
 }

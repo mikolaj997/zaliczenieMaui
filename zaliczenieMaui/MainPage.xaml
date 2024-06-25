@@ -3,27 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="zaliczenieMaui.MainPage"
              Title="">
-    <StackLayout Padding="10">
-        <Grid BackgroundColor="WhiteSmoke"  ColumnDefinitions="*,*,*" RowDefinitions="auto,auto" Padding="10">
-            <Button Grid.Column="0" Text="Dodaj projekt" Clicked="GoToPageAClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
-            <Button Grid.Column="1" Text="Edytuj projekt" Clicked="GoToPageBClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
-            <!--<StackLayout >-->
-            <Button Grid.Column="2" Text="Wszystkie projekty" BackgroundColor="WhiteSmoke"  TextColor="Black" >
-                    
-                </Button>
 
-            <!--<Button x:Name="ProjectDetails" Grid.Column="2" Text="Wszystkie projekty" IsVisible="True" TextColor="Black" >
-                <Button.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="ShowProjectsClicked" />
-                </Button.GestureRecognizers>
-            </Button>
-            <StackLayout x:Name="ProjectDetails" IsVisible="False" Orientation="Horizontal">
-                <Label Grid.Column="2" Text="Przyszłe" Margin="0,0,10,0"/>
-                <Label Grid.Column="2" Text="Przeszłe"/>
-            </StackLayout>-->
-            <!--</StackLayout>-->
-        </Grid>
-    </StackLayout>
-
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+            <Entry x:Name="projectNameEntry" Placeholder="Enter project name"/>
+            <Entry x:Name="projectDescriptionEntry" Placeholder="Enter project description"/>
+            <Button Text="Add Project" Clicked="OnAddProjectClicked"/>
+            <CollectionView x:Name="projectsCollection" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="10" ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Name}" Grid.Column="0" FontSize="16" VerticalOptions="Center"/>
+                            <Label Text="{Binding Description}" Grid.Column="1" FontSize="14" TextColor="Gray" VerticalOptions="Center"/>
+                            <ImageButton 
+                    Source="delete.png" 
+                    Grid.Column="2" 
+                    Clicked="OnDelete"
+                    CommandParameter="{Binding Id}"
+                    MinimumHeightRequest="40"
+                    MaximumWidthRequest="70"
+                    VerticalOptions="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
