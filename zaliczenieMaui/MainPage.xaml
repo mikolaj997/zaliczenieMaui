@@ -19,11 +19,11 @@
                 <DatePicker Margin="0"/>
                 <CollectionView x:Name="projectsCollection" SelectionMode="Single">
                     <CollectionView.ItemsLayout Margin="5">
-                        <GridItemsLayout Orientation="Vertical" Span="5"  VerticalItemSpacing="10" />
+                        <GridItemsLayout Orientation="Vertical" Span="4"  VerticalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate >
                         <DataTemplate>
-                            <Frame Margin="0" Padding="0" CornerRadius="10" WidthRequest="170" HeightRequest="120">
+                            <Frame Margin="0" Padding="0" CornerRadius="10" WidthRequest="250" HeightRequest="120">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -31,13 +31,15 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-
-                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
-                                    <ImageButton Source="delete.png" WidthRequest="30" HeightRequest="30" Clicked="OnDelete" CommandParameter="{Binding Id}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,0"/>
-                                    <Label Text="{Binding Description}" Grid.Row="1" Grid.Column="0" FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    <!--ImageButton niefunkcjonalny-->
+                                    <ImageButton Source="edit.png" WidthRequest="20" HeightRequest="20" Grid.Row="0" Grid.Column="0"></ImageButton>
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
+                                    <ImageButton Source="tdelete.png" WidthRequest="30" HeightRequest="30" Clicked="OnDelete" CommandParameter="{Binding Id}" Grid.Row="0" Grid.Column="2" Margin="0,0,0,0"/>
+                                    <Label Text="{Binding Description}" Grid.Row="1" Grid.Column="1" FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" />
 
                                 </Grid>
                             </Frame>
