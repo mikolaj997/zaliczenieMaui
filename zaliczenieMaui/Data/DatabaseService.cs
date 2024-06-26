@@ -19,30 +19,34 @@ public class DatabaseService
         {
             db.Open();
             var tableCommand = @"
-            CREATE TABLE IF NOT EXISTS Projects (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                Name TEXT, 
-                Description TEXT,
-                Status TEXT DEFAULT 'Nierozpoczęty'
-            )";
+                CREATE TABLE IF NOT EXISTS Projects (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    Name TEXT, 
+                    Description TEXT,
+                    Status TEXT DEFAULT 'Nierozpoczęty',
+                    DueDate TEXT
+                )";
             var createTable = new SqliteCommand(tableCommand, db);
             createTable.ExecuteNonQuery();
         }
     }
 
 
-    public async Task AddProjectAsync(string name, string description)
+    public async Task AddProjectAsync(string name, string description, DateTime dueDate)
     {
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
             db.Open();
-            var command = "INSERT INTO Projects (Name, Description) VALUES (@Name, @Description)";
+            var command = "INSERT INTO Projects (Name, Description, Status, DueDate) VALUES (@Name, @Description, @Status, @DueDate)";
             var insertCommand = new SqliteCommand(command, db);
             insertCommand.Parameters.AddWithValue("@Name", name);
             insertCommand.Parameters.AddWithValue("@Description", description);
+            insertCommand.Parameters.AddWithValue("@Status", "Nierozpoczęty");
+            insertCommand.Parameters.AddWithValue("@DueDate", dueDate.ToString("yyyy-MM-dd"));
             await insertCommand.ExecuteNonQueryAsync();
         }
     }
+
     public async Task<List<Project>> GetProjectsAsync()
     {
         var projects = new List<Project>();
@@ -50,11 +54,9 @@ public class DatabaseService
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
             db.Open();
-
-            var command = "SELECT Id, Name, Description FROM Projects";
-            var queryCommand = new SqliteCommand(command, db);
-
-            using (var reader = await queryCommand.ExecuteReaderAsync())
+            var command = "SELECT Id, Name, Description, Status, DueDate FROM Projects";
+            var selectCommand = new SqliteCommand(command, db);
+            using (var reader = await selectCommand.ExecuteReaderAsync())
             {
                 while (reader.Read())
                 {
@@ -62,12 +64,15 @@ public class DatabaseService
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
-                        Description = reader.GetString(2)
+                        Description = reader.GetString(2),
+                        Status = reader.GetString(3),
+                        DueDate = DateTime.Parse(reader.GetString(4))
                     };
                     projects.Add(project);
                 }
             }
         }
+
         return projects;
     }
 
@@ -82,6 +87,7 @@ public class DatabaseService
             await deleteCommand.ExecuteNonQueryAsync();
         }
     }
+
     public async Task UpdateProjectStatusAsync(int projectId, string status)
     {
         using (var db = new SqliteConnection($"Filename={_dbPath}"))

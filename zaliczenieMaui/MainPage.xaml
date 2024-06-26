@@ -1,46 +1,45 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="zaliczenieMaui.MainPage"
-             Title="">
+             Title="PManagement">
     <StackLayout>
-        <ContentView>
-            <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*,*,*,*" RowDefinitions="auto,auto" Padding="10">
-                <Button Grid.Column="0" Text="PManagement"  BackgroundColor="WhiteSmoke" FontAttributes="Bold" TextColor="Black" Margin="2" ></Button>
-            <Button Grid.Column="1" Text="Dodaj projekt" Clicked="OnAddProjectClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
-            <Button Grid.Column="3" Text="Edytuj status projektów" Clicked="GoToEditPageClicked" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
-            <Button Grid.Column="5" Text="Wszystkie projekty" Clicked="RefreshProjects" BackgroundColor="WhiteSmoke" TextColor="Black" Padding="10"/>
+        <!-- Pasek nawigacyjny -->
+        <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*" Padding="10">
+            <Label Text="PManagement" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Text="Dodaj projekt" Clicked="NavigateToAddProject" BackgroundColor="{StaticResource Primary}" TextColor="White" Margin="5" Padding="10"/>
+            <Button Text="Wszystkie projekty" Clicked="NavigateToAllProjects" BackgroundColor="{StaticResource Secondary}" TextColor="White" Margin="5" Padding="10"/>
         </Grid>
-        </ContentView>
+
+        <!-- Formularz dodawania projektów -->
         <ScrollView VerticalOptions="FillAndExpand">
-            <VerticalStackLayout Spacing="25" Padding="20">
+            <VerticalStackLayout Spacing="20" Padding="20">
                 <Entry x:Name="projectNameEntry" Placeholder="Enter project name"/>
                 <Entry x:Name="projectDescriptionEntry" Placeholder="Enter project description"/>
-                <!--DatePicker bez logiki narazie-->
-                <DatePicker Margin="0"/>
+                <DatePicker x:Name="projectDueDatePicker" Margin="0"/>
+                <Button Text="Add Project" Clicked="OnAddProjectClicked" BackgroundColor="{StaticResource Primary}" TextColor="White"/>
+
+                <!-- Sekcja 'Pozostałe projekty' -->
+                <Label Text="Pozostałe projekty" FontAttributes="Bold" FontSize="Medium"/>
                 <CollectionView x:Name="projectsCollection" SelectionMode="Single">
-                    <CollectionView.ItemsLayout Margin="5">
-                        <GridItemsLayout Orientation="Vertical" Span="4"  VerticalItemSpacing="10" />
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate >
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Margin="0" Padding="0" CornerRadius="10" WidthRequest="250" HeightRequest="120">
+                            <Frame Margin="5" Padding="10" CornerRadius="10" WidthRequest="200" HeightRequest="150" BorderColor="LightGray">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <!--ImageButton niefunkcjonalny-->
-                                    <ImageButton Source="edit.png" WidthRequest="20" HeightRequest="20" Grid.Row="0" Grid.Column="0"></ImageButton>
-                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center" />
-                                    <ImageButton Source="tdelete.png" WidthRequest="30" HeightRequest="30" Clicked="OnDelete" CommandParameter="{Binding Id}" Grid.Row="0" Grid.Column="2" Margin="0,0,0,0"/>
-                                    <Label Text="{Binding Description}" Grid.Row="1" Grid.Column="1" FontSize="14" TextColor="Gray" VerticalOptions="Center" HorizontalOptions="Center" />
-
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontSize="16" FontAttributes="Bold"/>
+                                    <ImageButton Source="edit.png" Grid.Row="0" Grid.Column="1" WidthRequest="20" HeightRequest="20"/>
+                                    <ImageButton Source="delete.png" Grid.Row="0" Grid.Column="2" WidthRequest="20" HeightRequest="20" Clicked="OnDelete" CommandParameter="{Binding Id}"/>
+                                    <Label Text="{Binding Description}" Grid.Row="1" Grid.ColumnSpan="3" FontSize="14" TextColor="Gray"/>
                                 </Grid>
                             </Frame>
                         </DataTemplate>

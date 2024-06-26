@@ -1,0 +1,40 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="zaliczenieMaui.AllProjectsPage"
+             Title="All Projects">
+    <StackLayout>
+        <!-- Pasek nawigacyjny -->
+        <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*" Padding="10">
+            <Label Text="PManagement" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
+            <Button Text="Dodaj projekt" Clicked="NavigateToAddProject" BackgroundColor="{StaticResource Secondary}" TextColor="White" Margin="5" Padding="10"/>
+            <Button Text="Wszystkie projekty" Clicked="NavigateToAllProjects" BackgroundColor="{StaticResource Primary}" TextColor="White" Margin="5" Padding="10"/>
+        </Grid>
+
+        <!-- Lista wszystkich projektów -->
+        <CollectionView x:Name="projectsCollection" SelectionMode="Single">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="5" Padding="10" CornerRadius="10" WidthRequest="200" HeightRequest="150" BorderColor="LightGray">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontSize="16" FontAttributes="Bold"/>
+                            <ImageButton Source="edit.png" Grid.Row="0" Grid.Column="1" WidthRequest="20" HeightRequest="20"/>
+                            <ImageButton Source="delete.png" Grid.Row="0" Grid.Column="2" WidthRequest="20" HeightRequest="20" Clicked="OnDelete" CommandParameter="{Binding Id}"/>
+                            <Label Text="{Binding Description}" Grid.Row="1" Grid.ColumnSpan="3" FontSize="14" TextColor="Gray"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

@@ -20,13 +20,31 @@ namespace zaliczenieMaui
             projectsCollection.ItemsSource = projects;
         }
 
+        private async void NavigateToAddProject(object sender, EventArgs e)
+        {
+            // Jeśli już jesteś na stronie MainPage, nie rób nic
+            if (Navigation.NavigationStack.LastOrDefault() is MainPage)
+                return;
+
+            await Navigation.PushAsync(new MainPage());
+        }
+        private async void NavigateToAllProjects(object sender, EventArgs e)
+        {
+            // Jeśli już jesteś na stronie AllProjects, nie rób nic
+            if (Navigation.NavigationStack.LastOrDefault() is AllProjectsPage)
+                return;
+
+            await Navigation.PushAsync(new AllProjectsPage());
+        }
 
         private async void OnAddProjectClicked(object sender, EventArgs e)
         {
-            await _databaseService.AddProjectAsync(projectNameEntry.Text, projectDescriptionEntry.Text);
+            var projectName = projectNameEntry.Text;
+            var projectDescription = projectDescriptionEntry.Text;
+            var projectDueDate = projectDueDatePicker.Date;
+
+            await _databaseService.AddProjectAsync(projectName, projectDescription, projectDueDate);
             LoadProjects();
-            projectNameEntry.Text = string.Empty;
-            projectDescriptionEntry.Text = string.Empty;
         }
         private async void OnDelete(object sender, EventArgs e)
         {
