@@ -30,10 +30,6 @@ namespace zaliczenieMaui
         }
         private async void NavigateToAllProjects(object sender, EventArgs e)
         {
-            // Jeśli już jesteś na stronie AllProjects, nie rób nic
-            if (Navigation.NavigationStack.LastOrDefault() is AllProjectsPage)
-                return;
-
             await Navigation.PushAsync(new AllProjectsPage());
         }
 
@@ -63,7 +59,7 @@ namespace zaliczenieMaui
             if (e.CurrentSelection != null && e.CurrentSelection.Count > 0)
             {
                 var selectedProject = (Project)e.CurrentSelection.FirstOrDefault();
-                await Navigation.PushAsync(new ProjectDetailsPage(selectedProject.Name, selectedProject.Description));
+                await Navigation.PushAsync(new ProjectDetailsPage(selectedProject));
                 // Deselect item
                 ((CollectionView)sender).SelectedItem = null;
             }

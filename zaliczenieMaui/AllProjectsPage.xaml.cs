@@ -44,4 +44,14 @@ public partial class AllProjectsPage : ContentPage
             LoadProjects();
         }
     }
+    private async void OnProjectSelected(object sender, SelectionChangedEventArgs e)
+    {
+        var selectedProject = e.CurrentSelection.FirstOrDefault() as Project;
+        if (selectedProject != null)
+        {
+            await Navigation.PushAsync(new ProjectDetailsPage(selectedProject));
+        }
+    }
+
+
 }

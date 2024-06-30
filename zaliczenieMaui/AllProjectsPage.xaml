@@ -11,7 +11,7 @@
         </Grid>
 
         <!-- Lista wszystkich projektów -->
-        <CollectionView x:Name="projectsCollection" SelectionMode="Single">
+        <CollectionView x:Name="projectsCollection" SelectionMode="Single" SelectionChanged="OnSelectionChanged">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="10"/>
             </CollectionView.ItemsLayout>

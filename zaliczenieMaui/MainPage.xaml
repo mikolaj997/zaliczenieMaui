@@ -7,7 +7,7 @@
         <Grid BackgroundColor="WhiteSmoke" ColumnDefinitions="*,*,*" Padding="10">
             <Label Text="PManagement" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" />
             <Button Text="Dodaj projekt" Clicked="NavigateToAddProject" BackgroundColor="{StaticResource Primary}" TextColor="White" Margin="5" Padding="10"/>
-            <Button Text="Wszystkie projekty" Clicked="NavigateToAllProjects" BackgroundColor="{StaticResource Secondary}" TextColor="White" Margin="5" Padding="10"/>
+            <Button Text="Wszystkie projekty" Clicked="NavigateToAllProjects" BackgroundColor="{StaticResource Primary}" TextColor="White" Margin="5" Padding="10"/>
         </Grid>
 
         <!-- Formularz dodawania projektów -->

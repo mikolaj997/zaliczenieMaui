@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.IO;
-using System.Threading.Tasks;
 using zaliczenieMaui.Models;
+using System.Threading.Tasks;
+
+
 
 public class DatabaseService
 {
@@ -32,7 +34,7 @@ public class DatabaseService
     }
 
 
-    public async Task AddProjectAsync(string name, string description, DateTime dueDate)
+    public async System.Threading.Tasks.Task AddProjectAsync(string name, string description, DateTime dueDate)
     {
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
@@ -66,7 +68,7 @@ public class DatabaseService
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                         Status = reader.GetString(3),
-                        DueDate = DateTime.Parse(reader.GetString(4))
+                        DueDate = reader.IsDBNull(4) ? (DateTime?)null : DateTime.Parse(reader.GetString(4))
                     };
                     projects.Add(project);
                 }
@@ -76,7 +78,7 @@ public class DatabaseService
         return projects;
     }
 
-    public async Task DeleteProjectAsync(int id)
+    public async System.Threading.Tasks.Task DeleteProjectAsync(int id)
     {
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
@@ -88,7 +90,7 @@ public class DatabaseService
         }
     }
 
-    public async Task UpdateProjectStatusAsync(int projectId, string status)
+    public async System.Threading.Tasks.Task UpdateProjectStatusAsync(int projectId, string status)
     {
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
@@ -100,4 +102,45 @@ public class DatabaseService
             await updateCommand.ExecuteNonQueryAsync();
         }
     }
+
+    public static async Task<List<TaskModel>> GetTasksAsync(int projectId)
+    {
+        var tasks = new List<TaskModel>();
+        using (var db = new SqliteConnection($"Filename={_dbPath}"))
+        {
+            db.Open();
+            var command = new SqliteCommand("SELECT Id, Title, Description, ProjectId FROM Tasks WHERE ProjectId = @ProjectId", db);
+            command.Parameters.AddWithValue("@ProjectId", projectId);
+
+            using (var reader = await command.ExecuteReaderAsync())
+            {
+                while (reader.Read())
+                {
+                    tasks.Add(new TaskModel
+                    {
+                        Id = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        Description = reader.GetString(2),
+                        ProjectId = reader.GetInt32(3)
+                    });
+                }
+            }
+        }
+        return tasks;
+    }
+    public async System.Threading.Tasks.Task AddTaskAsync(TaskModel task)
+    {
+        using (var db = new SqliteConnection($"Filename={_dbPath}"))
+        {
+            db.Open();
+            var command = ("INSERT INTO Tasks (Title, Description, ProjectId) VALUES (@Title, @Description, @ProjectId)");
+            var insertCommand = new SqliteCommand(command, db)
+            insertCommand.Parameters.AddWithValue("@Title", title);
+            insertCommand.Parameters.AddWithValue("@Description", task.Description);
+            insertCommand.Parameters.AddWithValue("@ProjectId", task.ProjectId);
+            await command.ExecuteNonQueryAsync();
+        }
+    }
+
+  
 }
