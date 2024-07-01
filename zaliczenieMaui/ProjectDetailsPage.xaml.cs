@@ -4,6 +4,8 @@ namespace zaliczenieMaui;
 
 public partial class ProjectDetailsPage : ContentPage
 {
+    private readonly DatabaseService _databaseService;
+
     public Project Project { get; set; }
 
     public ProjectDetailsPage(Project project)
@@ -19,7 +21,7 @@ public partial class ProjectDetailsPage : ContentPage
         Navigation.PopAsync();
     }
 
-    private async void OnAddTaskClicked(object sender, EventArgs e)
+    private async Task OnAddTaskClicked(object sender, EventArgs e)
     {
         var task = new TaskModel
         {
@@ -27,14 +29,15 @@ public partial class ProjectDetailsPage : ContentPage
             Description = taskDescriptionEditor.Text,
             ProjectId = Project.Id
         };
+
         // Dodaj zadanie do bazy danych
-        await DatabaseService.AddTaskAsync(task);
-        LoadTasks();
+        await _databaseService.AddTaskAsync(task);
+        await LoadTasks();
     }
 
-    private async void LoadTasks()
+    private async Task LoadTasks()
     {
-        var tasks = await DatabaseService.GetTasksAsync(Project.Id);
+        var tasks = await _databaseService.GetTasksAsync(Project.Id);
         tasksCollection.ItemsSource = tasks;
     }
 }

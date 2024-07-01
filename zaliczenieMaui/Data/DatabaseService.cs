@@ -2,11 +2,13 @@
 using System.IO;
 using zaliczenieMaui.Models;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 
 
 public class DatabaseService
 {
+
     private readonly string _dbPath;
 
     public DatabaseService()
@@ -62,13 +64,14 @@ public class DatabaseService
             {
                 while (reader.Read())
                 {
+
                     var project = new Project
                     {
                         Id = reader.GetInt32(0),
                         Name = reader.GetString(1),
                         Description = reader.GetString(2),
                         Status = reader.GetString(3),
-                        DueDate = reader.IsDBNull(4) ? (DateTime?)null : DateTime.Parse(reader.GetString(4))
+                        DueDate = reader.IsDBNull(4) ? (DateTime?)null : DateTime.Parse(reader.GetString(4)),
                     };
                     projects.Add(project);
                 }
@@ -103,7 +106,7 @@ public class DatabaseService
         }
     }
 
-    public static async Task<List<TaskModel>> GetTasksAsync(int projectId)
+    public async Task<List<TaskModel>> GetTasksAsync(int projectId)
     {
         var tasks = new List<TaskModel>();
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
@@ -128,19 +131,24 @@ public class DatabaseService
         }
         return tasks;
     }
-    public async System.Threading.Tasks.Task AddTaskAsync(TaskModel task)
+    public async Task AddTaskAsync(TaskModel task)
     {
         using (var db = new SqliteConnection($"Filename={_dbPath}"))
         {
-            db.Open();
-            var command = ("INSERT INTO Tasks (Title, Description, ProjectId) VALUES (@Title, @Description, @ProjectId)");
-            var insertCommand = new SqliteCommand(command, db)
-            insertCommand.Parameters.AddWithValue("@Title", title);
-            insertCommand.Parameters.AddWithValue("@Description", task.Description);
-            insertCommand.Parameters.AddWithValue("@ProjectId", task.ProjectId);
-            await command.ExecuteNonQueryAsync();
+            await db.OpenAsync();
+
+            var commandText = "INSERT INTO Tasks (Title, Description, ProjectId) VALUES (@Title, @Description, @ProjectId)";
+            using (var insertCommand = new SqliteCommand(commandText, db))
+            {
+                insertCommand.Parameters.AddWithValue("@Title", task.Title);
+                insertCommand.Parameters.AddWithValue("@Description", task.Description);
+                insertCommand.Parameters.AddWithValue("@ProjectId", task.ProjectId);
+
+                await insertCommand.ExecuteNonQueryAsync();
+            }
         }
     }
 
-  
+
+
 }
