@@ -11,7 +11,7 @@ public partial class ProjectDetailsPage : ContentPage
         InitializeComponent();
         Project = project;
         BindingContext = Project;
-        LoadTasks();
+       
     }
 
     private void OnBackClicked(object sender, EventArgs e)
@@ -19,24 +19,9 @@ public partial class ProjectDetailsPage : ContentPage
         Navigation.PopAsync();
     }
 
-    private async void OnAddTaskClicked(object sender, EventArgs e)
-    {
-        var task = new TaskModel
-        {
-            Title = taskTitleEntry.Text,
-            Description = taskDescriptionEditor.Text,
-            ProjectId = Project.Id
-        };
-        // Dodaj zadanie do bazy danych
-        await DatabaseService.AddTaskAsync(task);
-        LoadTasks();
-    }
+   
 
-    private async void LoadTasks()
-    {
-        var tasks = await DatabaseService.GetTasksAsync(Project.Id);
-        tasksCollection.ItemsSource = tasks;
-    }
+   
 }
 
 
