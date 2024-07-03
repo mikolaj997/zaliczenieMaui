@@ -27,7 +27,7 @@ namespace zaliczenieMaui.Models
 
         void AddTask()
         {
-            // Dodaj logikę do dodawania zadania
+            // Dodaj logikę do dodawania zadania // trzeba to dodać!
             Tasks.Add(new TaskModel { Title = "New Task" });
         }
     }

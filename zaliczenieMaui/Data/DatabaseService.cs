@@ -134,8 +134,8 @@ public class DatabaseService
         {
             db.Open();
             var command = ("INSERT INTO Tasks (Title, Description, ProjectId) VALUES (@Title, @Description, @ProjectId)");
-            var insertCommand = new SqliteCommand(command, db)
-            insertCommand.Parameters.AddWithValue("@Title", title);
+            var insertCommand = new SqliteCommand(command, db);
+            insertCommand.Parameters.AddWithValue("@Title", task.Title);
             insertCommand.Parameters.AddWithValue("@Description", task.Description);
             insertCommand.Parameters.AddWithValue("@ProjectId", task.ProjectId);
             await command.ExecuteNonQueryAsync();
