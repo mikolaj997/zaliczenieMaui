@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="zaliczenieMaui.EditProjectPage">
+
+    <StackLayout Padding="10">
+        <Entry x:Name="TitleEntry" Placeholder="Project Title" />
+        <Editor x:Name="DescriptionEditor" Placeholder="Project Description" />
+        <DatePicker x:Name="DeadlinePicker" />
+        <Picker x:Name="StatusPicker">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Not started</x:String>
+                    <x:String>In progress</x:String>
+                    <x:String>Completed</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Button Text="Save" Clicked="OnSaveClicked" />
+    </StackLayout>
+</ContentPage>

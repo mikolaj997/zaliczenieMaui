@@ -7,14 +7,13 @@ using SQLite;
 
 namespace zaliczenieMaui.Models
 {
-    public class Project
+    public class ProjectTask
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        public int ProjectId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime Deadline { get; set; }
-        public string Status { get; set; }
-        public string OwnerEmail { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }
