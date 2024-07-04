@@ -30,7 +30,6 @@ namespace zaliczenieMaui
             StatusLabel.Text = $"Status: {_project.Status}";
 
             BindingContext = new { IsOwner = _isOwner };
-            SizeChanged += OnPageSizeChanged;
             LoadTasks();
             LoadComments();
             LoadMembers();
@@ -148,16 +147,6 @@ namespace zaliczenieMaui
             var members = await _databaseService.GetMembersByProjectAsync(_project.Id);
             MembersCollectionView.ItemsSource = members;
         }
-        private void OnPageSizeChanged(object sender, EventArgs e)
-        {
-            if (Width > 1000)
-            {
-                DetailsGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
-            }
-            else
-            {
-                DetailsGrid.ColumnDefinitions[1].Width = new GridLength(0);
-            }
-        }
+
     }
 }

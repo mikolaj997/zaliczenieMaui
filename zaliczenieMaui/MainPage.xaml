@@ -6,7 +6,7 @@
     <StackLayout Padding="10">
         <Entry x:Name="EmailEntry" Placeholder="Email" />
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
-        <Button Text="Login" Clicked="OnLoginClicked" />
+        <Button Text="Login" Clicked="OnLoginClicked" Style="{StaticResource HoverButtonStyle}"/>
         <Label x:Name="ErrorMessage" TextColor="Red" IsVisible="False" />
         <Label>
             <Label.FormattedText>

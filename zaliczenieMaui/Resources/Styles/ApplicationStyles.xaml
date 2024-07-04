@@ -49,6 +49,13 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+    <Style TargetType="Button" x:Key="HoverButtonStyle">
+        <Style.Triggers>
+            <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                <Setter Property="BackgroundColor" Value="LightGray"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style TargetType="CheckBox">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />

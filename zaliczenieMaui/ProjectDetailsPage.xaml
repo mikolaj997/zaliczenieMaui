@@ -5,16 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
 
-
-    <StackLayout Padding="10">
-        <Label x:Name="TitleLabel" FontAttributes="Bold" FontSize="Large" />
-        <Grid x:Name="DetailsGrid" ColumnSpacing="20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackLayout Grid.Column="0">
+    <ScrollView>
+        <StackLayout Padding="10">
+            <Label x:Name="TitleLabel" FontAttributes="Bold" FontSize="Large" />
+            <StackLayout>
                 <Label Text="Project Details" FontAttributes="Bold" FontSize="Large" />
                 <Label x:Name="OwnerLabel" />
                 <Label x:Name="DescriptionLabel" />
@@ -22,8 +16,7 @@
                 <Label x:Name="StatusLabel" />
                 <Button Text="Edit" Clicked="OnEditProjectClicked" IsVisible="{Binding IsOwner}" />
             </StackLayout>
-
-            <StackLayout Grid.Column="1" IsVisible="{Binding IsOwner}">
+            <StackLayout IsVisible="{Binding IsOwner}">
                 <Label Text="Members" FontAttributes="Bold" FontSize="Large" />
                 <CollectionView x:Name="MembersCollectionView">
                     <CollectionView.ItemTemplate>
@@ -36,44 +29,42 @@
                 </CollectionView>
                 <Button Text="Add Member" Clicked="OnAddMemberClicked" />
             </StackLayout>
-        </Grid>
-        
-        <Label Text="Tasks" FontAttributes="Bold" FontSize="Medium" />
-        <CollectionView x:Name="TasksCollectionView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="10" Margin="5">
-                        <StackLayout>
-                            <Label Text="{Binding Title}" FontAttributes="Bold" />
-                            <Label Text="{Binding Description}" />
-                            <Label Text="{Binding IsCompleted, StringFormat='Completed: {0}'}" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnTaskTapped" />
-                            </Frame.GestureRecognizers>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-        <Button Text="Add Task" Clicked="OnAddTaskClicked" IsVisible="{Binding IsOwner}" />
-        <CollectionView x:Name="CommentsCollectionView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="10" Margin="5">
-                        <StackLayout>
-                            <Label Text="{Binding AuthorEmail}" FontAttributes="Bold" />
-                            <Label Text="{Binding Text}" />
-                            <Label Text="{Binding Timestamp, StringFormat='{0:dd/MM/yyyy HH:mm}'}" />
-                            <Label Text="{Binding FilePath, Converter={StaticResource FilePathToNameConverter}}" IsVisible="{Binding FilePath}" />
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-        <Entry x:Name="CommentEntry" Placeholder="Write a comment..." Style="{StaticResource EntryStandardStyle}"/>
-        <Button Text="Attach File" Clicked="OnAttachFileClicked" />
-        <Button Text="Send" Clicked="OnSendCommentClicked" />
-    </StackLayout>
+            <Label Text="Tasks" FontAttributes="Bold" FontSize="Medium" />
+            <CollectionView x:Name="TasksCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5">
+                            <StackLayout>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" />
+                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding IsCompleted, StringFormat='Completed: {0}'}" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTaskTapped" />
+                                </Frame.GestureRecognizers>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Add Task" Clicked="OnAddTaskClicked" IsVisible="{Binding IsOwner}" />
+            <Label Text="Comments" FontAttributes="Bold" FontSize="Medium" />
+            <CollectionView x:Name="CommentsCollectionView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5">
+                            <StackLayout>
+                                <Label Text="{Binding AuthorEmail}" FontAttributes="Bold" />
+                                <Label Text="{Binding Text}" />
+                                <Label Text="{Binding Timestamp, StringFormat='{0:dd/MM/yyyy HH:mm}'}" />
+                                <Label Text="{Binding FilePath, Converter={StaticResource FilePathToNameConverter}}" IsVisible="{Binding FilePath}" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Entry x:Name="CommentEntry" Placeholder="Write a comment..." Style="{StaticResource EntryStandardStyle}"/>
+            <Button Text="Attach File" Clicked="OnAttachFileClicked" />
+            <Button Text="Send" Clicked="OnSendCommentClicked" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
