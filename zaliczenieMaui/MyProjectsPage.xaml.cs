@@ -45,7 +45,7 @@ namespace zaliczenieMaui
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadMyProjectsAsync(); // Za³adowanie lub odœwie¿enie moich projektów
+            await LoadMyProjectsAsync();
         }
 
         private async Task LoadMyProjectsAsync()

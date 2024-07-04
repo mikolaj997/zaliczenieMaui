@@ -15,7 +15,6 @@ namespace zaliczenieMaui
             _databaseService = databaseService;
             _user = user;
 
-            // Inicjalizacja stron wewn¹trz HomePage
             Children.Add(new AllProjectsPage(_databaseService) { Title = "All Projects" });
             Children.Add(new MyProjectsPage(_databaseService, _user) { Title = "My Projects" });
             Children.Add(new AddProjectPage(_databaseService, _user) { Title = "Add Project" });
@@ -26,6 +25,7 @@ namespace zaliczenieMaui
             if (confirm)
             {
                 Application.Current.MainPage = new NavigationPage(new MainPage());
+                await DisplayAlert("Logged Out", "You have been successfully logged out.", "OK");
             }
         }
     }

@@ -54,7 +54,7 @@ namespace zaliczenieMaui
                 await _databaseService.DeleteProjectAsync(_project);
                 MessagingCenter.Send(this, "ProjectDeleted", _project);
                 await DisplayAlert("Success", "Project deleted successfully.", "OK");
-                await Navigation.PopAsync();  // Powrót do poprzedniej strony po usuniêciu
+                await Navigation.PopAsync();
             }
         }
     }

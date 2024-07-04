@@ -7,6 +7,11 @@
         <Entry x:Name="EmailEntry" Placeholder="Email" />
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
         <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" />
+        <Label Text="Back to Login" HorizontalOptions="Center" TextColor="Blue">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackToLoginTapped" />
+            </Label.GestureRecognizers>
+        </Label>
         <Button Text="Register" Clicked="OnRegisterClicked" />
         <Label x:Name="ErrorMessage" TextColor="Red" IsVisible="False" />
     </StackLayout>

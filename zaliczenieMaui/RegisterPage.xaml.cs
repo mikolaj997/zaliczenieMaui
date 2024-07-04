@@ -47,5 +47,9 @@ namespace zaliczenieMaui
             await DisplayAlert("Success", "Account created successfully", "OK");
             Application.Current.MainPage = new NavigationPage(new MainPage());
         }
+        private void OnBackToLoginTapped(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new NavigationPage(new MainPage());
+        }
     }
 }

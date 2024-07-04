@@ -15,6 +15,6 @@ namespace zaliczenieMaui.Models
         public string AuthorEmail { get; set; }
         public string Text { get; set; }
         public DateTime Timestamp { get; set; }
-        public string FilePath { get; set; } // ścieżka do pliku, jeśli załączony
+        public string FilePath { get; set; }
     }
 }

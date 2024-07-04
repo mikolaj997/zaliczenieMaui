@@ -4,6 +4,10 @@
              x:Class="zaliczenieMaui.MainPage">
 
     <StackLayout Padding="10">
+        <Label Text="mProject"
+               HorizontalOptions="Center"
+               FontSize="Large"
+               FontAttributes="Bold"/>
         <Entry x:Name="EmailEntry" Placeholder="Email" />
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
         <Label>
