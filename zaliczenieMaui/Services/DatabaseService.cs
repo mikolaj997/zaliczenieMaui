@@ -27,7 +27,7 @@ namespace zaliczenieMaui.Services
             _database.CreateTableAsync<Comment>().Wait();
         }
 
-        // User Methods
+        // User
         public Task<User> GetUserAsync(string email, string password)
         {
             return _database.Table<User>().Where(u => u.Email == email && u.Password == password).FirstOrDefaultAsync();
@@ -41,7 +41,7 @@ namespace zaliczenieMaui.Services
         {
             return _database.Table<User>().Where(u => u.Email == email).FirstOrDefaultAsync();
         }
-        // Project Methods
+        // Project
         public Task<List<Project>> GetAllProjectsAsync()
         {
             return _database.Table<Project>().ToListAsync();
@@ -61,8 +61,12 @@ namespace zaliczenieMaui.Services
         {
             return _database.UpdateAsync(project);
         }
+        public Task DeleteProjectAsync(Project project)
+        {
+            return _database.DeleteAsync(project);
+        }
 
-        // Task Methods
+        // Task 
         public Task<List<ProjectTask>> GetTasksByProjectAsync(int projectId)
         {
             return _database.Table<ProjectTask>().Where(t => t.ProjectId == projectId).ToListAsync();
@@ -77,7 +81,7 @@ namespace zaliczenieMaui.Services
         {
             return _database.UpdateAsync(task);
         }
-        // Project Member Methods
+        // Project Member
         public Task<List<ProjectMember>> GetMembersByProjectAsync(int projectId)
         {
             return _database.Table<ProjectMember>().Where(pm => pm.ProjectId == projectId).ToListAsync();
@@ -98,7 +102,7 @@ namespace zaliczenieMaui.Services
             return _database.QueryAsync<Project>(
                 "SELECT p.* FROM Project p INNER JOIN ProjectMember pm ON p.Id = pm.ProjectId WHERE pm.MemberEmail = ?", email);
         }
-        // Comment Methods
+        // Comment
         public Task<List<Comment>> GetCommentsByProjectIdAsync(int projectId)
         {
             return _database.Table<Comment>().Where(c => c.ProjectId == projectId).ToListAsync();

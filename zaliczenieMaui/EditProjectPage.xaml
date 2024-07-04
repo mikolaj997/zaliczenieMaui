@@ -17,5 +17,9 @@
             </Picker.ItemsSource>
         </Picker>
         <Button Text="Save" Clicked="OnSaveClicked" />
+        <Button Text="Delete Project" 
+            BackgroundColor="Red" 
+            TextColor="White"
+            Clicked="OnDeleteClicked" />
     </StackLayout>
 </ContentPage>

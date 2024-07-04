@@ -24,6 +24,11 @@ namespace zaliczenieMaui
                 await DisplayAlert("Error", "Please fill in all fields", "OK");
                 return;
             }
+            if (DeadlinePicker.Date <= DateTime.Today)
+            {
+                await DisplayAlert("Error", "The deadline must be in the future.", "OK");
+                return;
+            }
 
             var project = new Project
             {

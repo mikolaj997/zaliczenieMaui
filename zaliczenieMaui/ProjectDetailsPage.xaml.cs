@@ -92,7 +92,7 @@ namespace zaliczenieMaui
             base.OnDisappearing();
             MessagingCenter.Unsubscribe<EditProjectPage, Project>(this, "ProjectUpdated");
         }
-        private async void OnAttachFileClicked(object sender, EventArgs e)
+        /*private async void OnAttachFileClicked(object sender, EventArgs e)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace zaliczenieMaui
             {
                 await DisplayAlert("Error", $"Error attaching file: {ex.Message}", "OK");
             }
-        }
+        }*/
 
         private async void OnSendCommentClicked(object sender, EventArgs e)
         {
@@ -117,13 +117,13 @@ namespace zaliczenieMaui
                 AuthorEmail = _user.Email,
                 Text = CommentEntry.Text,
                 Timestamp = DateTime.UtcNow,
-                FilePath = _attachedFilePath // Dodanie œcie¿ki pliku
+                //FilePath = _attachedFilePath
             };
 
             await _databaseService.SaveCommentAsync(comment);
-            CommentEntry.Text = ""; // Czyœæ pole komentarza
-            _attachedFilePath = null; // Reset œcie¿ki za³¹cznika
-            LoadComments(); // Za³aduj komentarze na nowo
+            CommentEntry.Text = "";
+            //_attachedFilePath = null;
+            LoadComments();
         }
 
         private async void LoadComments()
@@ -147,6 +147,5 @@ namespace zaliczenieMaui
             var members = await _databaseService.GetMembersByProjectAsync(_project.Id);
             MembersCollectionView.ItemsSource = members;
         }
-
     }
 }

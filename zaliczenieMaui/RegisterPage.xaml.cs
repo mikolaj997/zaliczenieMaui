@@ -21,6 +21,11 @@ namespace zaliczenieMaui
             var password = PasswordEntry.Text;
             var confirmPassword = ConfirmPasswordEntry.Text;
 
+            if (string.IsNullOrEmpty(password) || password.Length < 6)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Password must be at least 6 characters long.", "OK");
+                return;
+            }
             if (password != confirmPassword)
             {
                 ErrorMessage.Text = "Passwords do not match.";

@@ -42,5 +42,19 @@ namespace zaliczenieMaui
                 await Navigation.PushAsync(new ProjectDetailsPage(_databaseService, _user, selectedProject));
             }
         }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadMyProjectsAsync(); // Za³adowanie lub odœwie¿enie moich projektów
+        }
+
+        private async Task LoadMyProjectsAsync()
+        {
+            var ownerProjects = await _databaseService.GetProjectsByOwnerAsync(_user.Email);
+            var memberProjects = await _databaseService.GetProjectsByMemberAsync(_user.Email);
+            var allProjects = new List<Project>(ownerProjects);
+            allProjects.AddRange(memberProjects);
+            ProjectsCollectionView.ItemsSource = allProjects;
+        }
     }
 }

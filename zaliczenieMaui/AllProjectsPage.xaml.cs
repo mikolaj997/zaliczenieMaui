@@ -30,6 +30,16 @@ namespace zaliczenieMaui
         {
             LoadProjects();
         }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadProjectsAsync();
+        }
 
+        private async Task LoadProjectsAsync()
+        {
+            var projects = await _databaseService.GetAllProjectsAsync();
+            ProjectsCollectionView.ItemsSource = projects;
+        }
     }
 }

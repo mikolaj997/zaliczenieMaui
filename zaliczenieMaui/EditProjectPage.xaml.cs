@@ -24,6 +24,16 @@ namespace zaliczenieMaui
 
         private async void OnSaveClicked(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(TitleEntry.Text) || string.IsNullOrEmpty(DescriptionEditor.Text))
+            {
+                await DisplayAlert("Error", "Please fill in all fields", "OK");
+                return;
+            }
+            if (DeadlinePicker.Date <= DateTime.Today)
+            {
+                await DisplayAlert("Error", "The deadline must be in the future.", "OK");
+                return;
+            }
             _project.Title = TitleEntry.Text;
             _project.Description = DescriptionEditor.Text;
             _project.Deadline = DeadlinePicker.Date;
@@ -33,6 +43,19 @@ namespace zaliczenieMaui
             MessagingCenter.Send(this, "ProjectUpdated", _project);
             await DisplayAlert("Success", "Project updated successfully", "OK");
             await Navigation.PopAsync();
+        }
+        private async void OnDeleteClicked(object sender, EventArgs e)
+        {
+            bool isConfirmed = await DisplayAlert("Confirm Delete",
+                                                  "Are you sure you want to delete this project?",
+                                                  "Yes", "No");
+            if (isConfirmed)
+            {
+                await _databaseService.DeleteProjectAsync(_project);
+                MessagingCenter.Send(this, "ProjectDeleted", _project);
+                await DisplayAlert("Success", "Project deleted successfully.", "OK");
+                await Navigation.PopAsync();  // Powrót do poprzedniej strony po usuniêciu
+            }
         }
     }
 }
